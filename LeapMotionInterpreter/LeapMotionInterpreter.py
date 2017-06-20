@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __main__ import vtk, qt, ctk, slicer
+import os
 
 
 class LeapMotionInterpreter:
@@ -13,8 +14,8 @@ class LeapMotionInterpreter:
         """
         parent.acknowledgementText = """
         Nobuhiko Hata, PhD, Franklin King, MS
-        """
-        parent.icon = qt.QIcon('C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\icon.png')
+        """        
+        parent.icon = qt.QIcon(os.path.dirname(os.path.realpath(__file__)) + '\Leap Motion GUI\icon.png')
         self.parent = parent
 
 
@@ -32,6 +33,8 @@ class LeapMotionInterpreterWidget:
             self.parent.show()
 
     def setup(self):
+        self.dir = os.path.dirname(os.path.realpath(__file__))
+    
         self.n = 1
         self.m = 1
 
@@ -214,7 +217,7 @@ class LeapMotionInterpreterWidget:
         self.label1 = qt.QLabel()
         self.label1.setScaledContents(True)
         self.label1.setMargin(0)
-        image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview.png")
+        image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_overview.png")
         self.label1.setPixmap(image)
         self.label1.setSizePolicy(qSize)
         gestureVisualizerLayout.addWidget(self.label1)
@@ -227,14 +230,15 @@ class LeapMotionInterpreterWidget:
         self.label2 = qt.QLabel()
         self.label2.setScaledContents(True)
         self.label2.setMargin(0)
-        image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_category (1).png")
+        image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_category (1).png")
         self.label2.setPixmap(image)
         self.label2.setSizePolicy(qSize)
         selectionVisualizerLayout.addWidget(self.label2)
         self.label3 = qt.QLabel()
         self.label3.setScaledContents(True)
         self.label3.setMargin(0)
-        image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_sliceview.png")
+        
+        image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_sliceview.png")
         self.label3.setPixmap(image)
         self.label3.setSizePolicy(qSize)
         selectionVisualizerLayout.addWidget(self.label3)
@@ -367,19 +371,19 @@ class LeapMotionInterpreterWidget:
             len(self.leapmotionData)-1])))
         # Update gesture visualizer
         if self.leapmotionData.find("fingers: 1") != -1:
-            image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview.png")
+            image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_overview.png")
             self.label1.setPixmap(image)
         elif self.leapmotionData.find("fingers: 2") != -1:
-            image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview (1).png")
+            image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_overview (1).png")
             self.label1.setPixmap(image)
         elif self.leapmotionData.find("fingers: 3") != -1:
-            image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview (2).png")
+            image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_overview (2).png")
             self.label1.setPixmap(image)
         elif self.leapmotionData.find("fingers: 4") != -1:
-            image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview.png")
+            image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_overview.png")
             self.label1.setPixmap(image)
         elif self.leapmotionData.find("fingers: 5") != -1:
-            image = qt.QPixmap("C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview.png")
+            image = qt.QPixmap(self.dir + "\Leap Motion GUI\GUI_overview.png")
             self.label1.setPixmap(image)
         # Recognize key tap gesture
         if self.leapmotionData.find("Key Tap ID:") != -1:
@@ -423,12 +427,12 @@ class LeapMotionInterpreterWidget:
                         self.volumesetcount = 0
             # Update category GUI
             image = qt.QPixmap(
-                "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_category (%s).png" % str(self.category + 1))
+                self.dir + "\Leap Motion GUI\GUI_category (%s).png" % str(self.category + 1))
             self.label2.setPixmap(image)
             # Update subcategory GUI of slice view category
             if self.category == 0:
                 image = qt.QPixmap(
-                    "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_sliceview (%s).png" % str(self.subcategory + 1))
+                    self.dir + "\Leap Motion GUI\GUI_sliceview (%s).png" % str(self.subcategory + 1))
                 self.label3.setPixmap(image)
                 # Show slice widgets
                 if self.subcategory == 0:
@@ -450,7 +454,7 @@ class LeapMotionInterpreterWidget:
             # Set and update subcategory GUI of scene view
             elif self.category == 1:
                 image = qt.QPixmap(
-                    "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_sceneview (%s).png" % str(self.subcategory + 1))
+                    self.dir + "\Leap Motion GUI\GUI_sceneview (%s).png" % str(self.subcategory + 1))
                 self.label3.setPixmap(image)
                 # Set and update corner annotation titles
                 self.subcategories = ['Yaw', 'Roll', 'Pitch', 'Zoom']
@@ -458,7 +462,7 @@ class LeapMotionInterpreterWidget:
             # Set and update subcategory GUI of window/level
             elif self.category == 2:
                 image = qt.QPixmap(
-                    "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_windowlevel (%s).png" % str(self.subcategory + 1))
+                    self.dir + "\Leap Motion GUI\GUI_windowlevel (%s).png" % str(self.subcategory + 1))
                 self.label3.setPixmap(image)
                 # Set and update corner annotation titles
                 self.subcategories = ['Window, Foreground','Level, Foreground', 'Window, Background', 'Level, Background']
@@ -466,7 +470,7 @@ class LeapMotionInterpreterWidget:
             # Set and update subcategory GUI of foreground opacity
             elif self.category == 3:
                 image = qt.QPixmap(
-                    "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_foregroundopacity (%s).png" % str(self.subcategory + 1))
+                    self.dir + "\Leap Motion GUI\GUI_foregroundopacity (%s).png" % str(self.subcategory + 1))
                 self.label3.setPixmap(image)
                 self.subcategories = ['Red','Yellow', 'Green', 'All']
                 # Set and update corner annotation titles
@@ -474,13 +478,13 @@ class LeapMotionInterpreterWidget:
             # Set subcategory GUI of viewer layout
             elif self.category == 4:
                 image = qt.QPixmap(
-                    "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_layout.png")
+                    self.dir + "\Leap Motion GUI\GUI_layout.png")
                 self.label3.setPixmap(image)
                 self.subcategorytitle = "Viewer Layout"
             # Set subcategory GUI of volume set selection
             elif self.category == 5:
                 image = qt.QPixmap(
-                    "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_volumesetselection (%s).png" % str(self.volumesetcount + 1))
+                    self.dir + "\Leap Motion GUI\GUI_volumesetselection (%s).png" % str(self.volumesetcount + 1))
                 self.label3.setPixmap(image)
                 self.subcategories = ['A', 'B', 'C']
                 # Set and update corner annotation titles
@@ -489,7 +493,7 @@ class LeapMotionInterpreterWidget:
         if self.leapmotionData.find("Circle ID") != -1:
             # Update gesture visualizer
             image = qt.QPixmap(
-                "C:\Users\Andy Zheng\PycharmProjects\LeapIGTLink_py\LeapMotionInterpreter\Leap Motion GUI\GUI_overview (3).png")
+                self.dir + "\Leap Motion GUI\GUI_overview (3).png")
             self.label1.setPixmap(image)
             # Get hand velocity
             self.amp = float(
